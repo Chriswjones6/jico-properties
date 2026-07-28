@@ -7,7 +7,7 @@
    2. Paste that full URL between the quotes below.
    3. Leave it '' to keep the current behavior (opens the visitor's email app).
    ============================================================================ */
-var JICO_FORM_ENDPOINT = '';
+var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
 
 (function () {
   'use strict';
