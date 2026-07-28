@@ -196,9 +196,12 @@
 (function(){
   'use strict';
   var HERO_CLIPS = [
-    'assets/video/hero-homes-aerial.mp4',
-    'assets/video/hero-coastal-travel.mp4',
-    'assets/video/hero-coastal-sunrise.mp4'
+    'assets/video/hero-homes-aerial.mp4',     // residential aerial
+    'assets/video/hero-office-exterior.mp4',  // commercial office
+    'assets/video/hero-coastal-travel.mp4',   // beach
+    'assets/video/hero-suburban-aerial.mp4',  // residential development aerial
+    'assets/video/hero-retail-plaza.mp4',     // commercial retail strip
+    'assets/video/hero-coastal-sunrise.mp4'   // beach
   ];
   var mount = document.getElementById('heroMontage');
   if(!mount) return;
