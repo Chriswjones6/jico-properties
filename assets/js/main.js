@@ -1,4 +1,4 @@
-/* JICO Properties — interactions (built on the JICON Construction system) */
+/* JICO Properties — site interactions */
 (function () {
   'use strict';
   var $ = function (s, c) { return (c || document).querySelector(s); };
@@ -198,9 +198,6 @@
   var HERO_CLIPS = [
     'assets/video/hero-homes-aerial.mp4',
     'assets/video/hero-coastal-travel.mp4',
-    'assets/video/hero-commercial-framing.mp4',
-    'assets/video/hero-kitchen-white.mp4',
-    'assets/video/hero-paint-roller.mp4',
     'assets/video/hero-coastal-sunrise.mp4'
   ];
   var mount = document.getElementById('heroMontage');

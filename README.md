@@ -1,16 +1,14 @@
 # JICO Properties — website
 
 Owner-operated Grand Strand real estate: we buy residential **and** commercial property,
-renovate it in-house (via [JICON Construction](https://getjicon.com)), and lease it.
-Slogan: **Opening New Doors.**
+fix it up, and lease it. In-house maintenance. Slogan: **Opening New Doors.**
 
-Static site — no build step. Same design system as getjicon.com (black `#0d0d0f` / white /
-red `#D71F27`, Archivo + Inter), so the two sites read as siblings.
+Static site — no build step. Black `#0d0d0f` / white / red `#D71F27`, Archivo + Inter.
 
 ## Structure
 ```
 index.html                 single page (all sections)
-assets/css/styles.css       getjicon base system + JICO Properties additions
+assets/css/styles.css       site styles (black/white/red system)
 assets/js/main.js           nav, montage hero, units grid+filter, counters, before/after, contact form
 assets/img/                 logo variants, favicon (red door), placeholder photos
 assets/video/               crossfading hero clips (muted, looping)
