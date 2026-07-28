@@ -35,12 +35,12 @@
      type: 'residential' | 'commercial'  ·  status: 'available' | 'soon'
      ========================================================= */
   var SAMPLE_UNITS = [
-    { type:'residential', status:'available', title:'3 bed · 2 bath house',        addr:'Carolina Forest, Myrtle Beach', beds:'3 bd', bath:'2 ba', sqft:'1,650 sqft', rent:'$2,100', img:'assets/img/interior-1.jpg' },
-    { type:'residential', status:'available', title:'2 bed · 2 bath condo',        addr:'Barefoot Resort, N. Myrtle Beach', beds:'2 bd', bath:'2 ba', sqft:'1,100 sqft', rent:'$1,650', img:'assets/img/kitchen-2.jpg' },
-    { type:'commercial',  status:'available', title:'Retail / office suite',       addr:'Little River',                     beds:'—',   bath:'1 ba', sqft:'1,400 sqft', rent:'$1,900', img:'assets/img/exterior-1.jpg' },
-    { type:'residential', status:'soon',      title:'2 bed · 1 bath duplex',       addr:'Surfside Beach',                   beds:'2 bd', bath:'1 ba', sqft:'900 sqft',  rent:'$1,475', img:'assets/img/kitchen-1.jpg' },
-    { type:'commercial',  status:'available', title:'Small-business storefront',   addr:'Market Common, Myrtle Beach',      beds:'—',   bath:'1 ba', sqft:'2,000 sqft', rent:'$2,600', img:'assets/img/hero-home.jpg' },
-    { type:'residential', status:'available', title:'4 bed · 3 bath house',        addr:'Murrells Inlet',                   beds:'4 bd', bath:'3 ba', sqft:'2,200 sqft', rent:'$2,650', img:'assets/img/interior-1.jpg' }
+    { type:'residential', status:'available', title:'3 bed · 2 bath house',        addr:'Conway',                    beds:'3 bd', bath:'2 ba', sqft:'1,650 sqft', rent:'$2,100', img:'assets/img/interior-1.jpg' },
+    { type:'residential', status:'available', title:'2 bed · 2 bath condo',        addr:'Myrtle Beach',              beds:'2 bd', bath:'2 ba', sqft:'1,100 sqft', rent:'$1,650', img:'assets/img/kitchen-2.jpg' },
+    { type:'commercial',  status:'available', title:'Retail / office suite',       addr:'Socastee',                  beds:'—',   bath:'1 ba', sqft:'1,400 sqft', rent:'$1,900', img:'assets/img/exterior-1.jpg' },
+    { type:'residential', status:'soon',      title:'2 bed · 1 bath duplex',       addr:'Socastee',                  beds:'2 bd', bath:'1 ba', sqft:'900 sqft',  rent:'$1,475', img:'assets/img/kitchen-1.jpg' },
+    { type:'commercial',  status:'available', title:'Small-business storefront',   addr:'Myrtle Beach',              beds:'—',   bath:'1 ba', sqft:'2,000 sqft', rent:'$2,600', img:'assets/img/hero-home.jpg' },
+    { type:'residential', status:'available', title:'4 bed · 3 bath house',        addr:'Conway',                    beds:'4 bd', bath:'3 ba', sqft:'2,200 sqft', rent:'$2,650', img:'assets/img/interior-1.jpg' }
   ];
 
   var grid = $('#unitGrid');
@@ -196,12 +196,12 @@
 (function(){
   'use strict';
   var HERO_CLIPS = [
-    'assets/video/hero-homes-aerial.mp4',     // residential aerial
-    'assets/video/hero-office-exterior.mp4',  // commercial office
-    'assets/video/hero-coastal-travel.mp4',   // beach
-    'assets/video/hero-suburban-aerial.mp4',  // residential development aerial
-    'assets/video/hero-retail-plaza.mp4',     // commercial retail strip
-    'assets/video/hero-coastal-sunrise.mp4'   // beach
+    'assets/video/hero-retail-plaza.mp4',     // 1 commercial retail strip
+    'assets/video/hero-homes-aerial.mp4',     // 2 residential aerial
+    'assets/video/hero-coastal-travel.mp4',   // 3 beach
+    'assets/video/hero-office-exterior.mp4',  // 4 commercial office
+    'assets/video/hero-suburban-aerial.mp4',  // 5 residential development aerial
+    'assets/video/hero-coastal-sunrise.mp4'   // 6 beach
   ];
   var mount = document.getElementById('heroMontage');
   if(!mount) return;
