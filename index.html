@@ -35,6 +35,23 @@
   "slogan": "Opening New Doors"
 }
 </script>
+
+<!-- FAQ schema (helps this page show rich results in Google) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How do I apply for a rental?","acceptedAnswer":{"@type":"Answer","text":"Find a unit under Available, open it, and apply online through our secure tenant portal. Applications come straight to us for screening and a real person follows up."}},
+    {"@type":"Question","name":"What do I need to qualify?","acceptedAnswer":{"@type":"Answer","text":"Proof of income, a rental and credit history check, and a completed application. Because we are the owner, we can consider context on your history."}},
+    {"@type":"Question","name":"Do you allow pets?","acceptedAnswer":{"@type":"Answer","text":"It varies by unit. Some homes are pet-friendly with a pet deposit; the listing will note it, or you can ask before applying."}},
+    {"@type":"Question","name":"How does maintenance work?","acceptedAnswer":{"@type":"Answer","text":"Submit a request in the tenant portal or call 301-542-2542. Maintenance is in-house with no third-party dispatch."}},
+    {"@type":"Question","name":"How do I pay rent?","acceptedAnswer":{"@type":"Answer","text":"Online through the tenant portal by bank transfer, card, or automatic monthly payments."}},
+    {"@type":"Question","name":"What areas do you cover?","acceptedAnswer":{"@type":"Answer","text":"We own and lease homes and commercial space in Conway, Myrtle Beach, and Socastee, South Carolina."}},
+    {"@type":"Question","name":"Do you lease commercial space too?","acceptedAnswer":{"@type":"Answer","text":"Yes. We lease retail, office, and storefront space for small businesses alongside our residential rentals."}}
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -200,6 +217,68 @@
   </div>
 </section>
 
+<!-- ============ COVERAGE / AREA MAP ============ -->
+<section class="section section--alt" id="coverage">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="kicker kicker--light">Where we open doors</span>
+      <h2 class="section__title">Renting in Conway, Myrtle Beach &amp; Socastee.</h2>
+      <p class="section__lead">We own and lease across three connected Horry County markets — click a location to learn more, then see what's available.</p>
+    </div>
+    <div class="coverage__in">
+      <div class="map">
+        <svg viewBox="0 0 600 440" role="img" aria-label="Map of JICO Properties service areas: Conway, Socastee and Myrtle Beach">
+          <defs>
+            <linearGradient id="seaGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1b4a63"/><stop offset="100%" stop-color="#0d2233"/>
+            </linearGradient>
+          </defs>
+          <rect class="map__land" x="0" y="0" width="600" height="440"/>
+          <path class="map__water" d="M 472,0 C 432,120 402,260 360,440 L 600,440 L 600,0 Z"/>
+          <path class="map__coast" d="M 472,0 C 432,120 402,260 360,440"/>
+          <path class="map__waterway" d="M 250,-10 C 300,140 300,300 250,450"/>
+          <!-- Conway (inland NW) -->
+          <g class="pin" data-area="conway" tabindex="0" role="button" aria-label="Conway">
+            <circle class="pin__pulse" cx="150" cy="120" r="8"/>
+            <circle class="pin__hit" cx="150" cy="120" r="26"/>
+            <circle class="pin__dot" cx="150" cy="120" r="8"/>
+            <text class="pin__label" x="150" y="100" text-anchor="middle">Conway</text>
+          </g>
+          <!-- Socastee (central, on the Intracoastal) -->
+          <g class="pin" data-area="socastee" tabindex="0" role="button" aria-label="Socastee">
+            <circle class="pin__pulse" cx="290" cy="300" r="8"/>
+            <circle class="pin__hit" cx="290" cy="300" r="26"/>
+            <circle class="pin__dot" cx="290" cy="300" r="8"/>
+            <text class="pin__label" x="290" y="330" text-anchor="middle">Socastee</text>
+          </g>
+          <!-- Myrtle Beach (on the coast) -->
+          <g class="pin" data-area="myrtle-beach" tabindex="0" role="button" aria-label="Myrtle Beach">
+            <circle class="pin__pulse" cx="415" cy="185" r="8"/>
+            <circle class="pin__hit" cx="415" cy="185" r="26"/>
+            <circle class="pin__dot" cx="415" cy="185" r="8"/>
+            <text class="pin__label" x="415" y="165" text-anchor="middle">Myrtle Beach</text>
+          </g>
+        </svg>
+      </div>
+      <div class="area-cards">
+        <article class="area-card" data-area="conway">
+          <h3>Conway</h3>
+          <p>Historic riverfront downtown and quieter inland living, minutes from the beach. Homes for rent and small-business space for lease.</p>
+        </article>
+        <article class="area-card" data-area="myrtle-beach">
+          <h3>Myrtle Beach</h3>
+          <p>The heart of the Grand Strand — walkable neighborhoods, the coast, and steady traffic for retail and office tenants.</p>
+        </article>
+        <article class="area-card" data-area="socastee">
+          <h3>Socastee</h3>
+          <p>Central and established, along the Intracoastal between Conway and the coast — convenient homes and commercial units.</p>
+        </article>
+        <a href="#rentals" class="btn btn--red btn--block">See what's available</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOR RENTERS ============ -->
 <section class="section" id="renters">
   <div class="wrap">
@@ -273,6 +352,78 @@
       </figure>
     </div>
     <p class="note"><b>Do not launch with placeholder quotes.</b> Text five current tenants: "Would you mind two sentences about renting from us?" Three real reviews beat twelve invented ones — and invented testimonials on a real-estate site are a legal liability.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="section__head section__head--center">
+      <span class="kicker">Good to know</span>
+      <h2 class="section__title">Questions renters ask us.</h2>
+    </div>
+    <div class="faq" id="faqList">
+      <div class="faq__item">
+        <button class="faq__q" type="button">How do I apply for a rental?</button>
+        <div class="faq__a"><p>Find a unit under <a href="#rentals">Available</a>, open it, and apply online through our secure tenant portal. Applications come straight to us for screening — no black hole, and a real person follows up.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">What do I need to qualify?</button>
+        <div class="faq__a"><p>Standard stuff: proof of income, a rental/credit history check, and a completed application. If something in your history needs context, tell us — we're the owner, so we can actually make the call.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">Do you allow pets?</button>
+        <div class="faq__a"><p>It's unit by unit. Some of our homes are pet-friendly with a pet deposit; the listing will say. If you don't see it noted, just <a href="#contact">ask us</a> before you apply.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">How does maintenance work?</button>
+        <div class="faq__a"><p>Submit a request in the tenant portal or call us at <a href="tel:+13015422542">301-542-2542</a>. Maintenance is in-house — no third-party dispatch and no waiting on an off-site owner to sign off.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">How do I pay rent?</button>
+        <div class="faq__a"><p>Online through the tenant portal — bank transfer, card, or automatic monthly payments so you never miss a due date.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">What areas do you cover?</button>
+        <div class="faq__a"><p>We own and lease in <b>Conway, Myrtle Beach, and Socastee</b>. Because we hold property across all three, we can often move you within the portfolio when your life changes.</p></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button">Do you lease commercial space too?</button>
+        <div class="faq__a"><p>Yes — retail, office, and storefront space for small businesses, alongside our residential rentals. <a href="#contact">Tell us what you need</a> and we'll point you to what fits.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOTIFY ME ============ -->
+<section class="notify" id="notify">
+  <div class="wrap notify__in">
+    <div>
+      <h2>Nothing open in your area yet?</h2>
+      <p>Tell us what you're after and we'll reach out the moment something opens up in Conway, Myrtle Beach, or Socastee — before it's ever advertised.</p>
+    </div>
+    <form class="notify__form" id="notifyForm">
+      <label class="full"><input type="text" name="name" placeholder="Your name" required></label>
+      <label><input type="email" name="email" placeholder="Email" required></label>
+      <label><input type="tel" name="phone" placeholder="Phone"></label>
+      <label>
+        <select name="area" aria-label="Preferred area">
+          <option value="">Any area</option>
+          <option>Conway</option>
+          <option>Myrtle Beach</option>
+          <option>Socastee</option>
+        </select>
+      </label>
+      <label>
+        <select name="type" aria-label="Type">
+          <option value="">Home or commercial?</option>
+          <option>Residential home</option>
+          <option>Commercial space</option>
+        </select>
+      </label>
+      <button type="submit" class="notify__btn">Notify me</button>
+      <p class="notify__note" id="notifyNote">No spam — just a heads-up when something fits.</p>
+    </form>
   </div>
 </section>
 
@@ -397,6 +548,21 @@
     Call
   </a>
   <a class="mobilebar__quote" href="#rentals">Available Units</a>
+</div>
+
+<!-- ============ CHAT ASSISTANT ============ -->
+<button class="chat-fab" id="chatFab" aria-label="Open chat">
+  <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2z"/></svg>
+  Ask us
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="JICO Properties chat">
+  <div class="chat-head">
+    <img src="assets/img/logo-white-reddoor.png" alt="JICO Properties">
+    <span class="st">Online</span>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-quick" id="chatQuick"></div>
 </div>
 
 <script src="assets/js/main.js"></script>

@@ -234,3 +234,138 @@
   if(els[0].readyState >= 3){ start(); }
   else { els[0].addEventListener('canplay', start, { once: true }); els[0].load(); }
 })();
+
+
+/* ============ FAQ accordion ============ */
+(function(){
+  'use strict';
+  var items = Array.prototype.slice.call(document.querySelectorAll('.faq__item'));
+  items.forEach(function(item){
+    var q = item.querySelector('.faq__q'), a = item.querySelector('.faq__a');
+    if(!q || !a) return;
+    q.setAttribute('aria-expanded','false');
+    q.addEventListener('click', function(){
+      var open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      a.style.maxHeight = open ? (a.scrollHeight + 'px') : '0px';
+    });
+  });
+})();
+
+/* ============ Notify-me form (Formspree when configured, mailto fallback) ============ */
+(function(){
+  'use strict';
+  var form = document.getElementById('notifyForm'), note = document.getElementById('notifyNote');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var q = function(n){ var el = form.querySelector('[name="'+n+'"]'); return el ? el.value.trim() : ''; };
+    var name = q('name'), email = q('email');
+    if(!name || !email){ note.textContent = 'Please add your name and email.'; return; }
+    var btn = form.querySelector('.notify__btn'), orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending...';
+    var action = form.getAttribute('action') || '';
+    var configured = action.indexOf('formspree.io') > -1 && action.indexOf('your-form-id') === -1;
+    function ok(){ form.reset(); btn.disabled = false; btn.textContent = orig;
+      note.textContent = "You're on the list - we'll reach out when something fits."; }
+    function fallback(){
+      btn.disabled = false; btn.textContent = orig;
+      var body = 'NOTIFY-ME REQUEST - JICO Properties\n\nName: '+name+'\nEmail: '+email+
+        '\nPhone: '+q('phone')+'\nPreferred area: '+(q('area')||'Any')+'\nType: '+(q('type')||'Any')+'\n';
+      var mailto = 'mailto:info@jicoproperties.com?subject='+encodeURIComponent('Notify me - new availability')+
+        '&body='+encodeURIComponent(body);
+      var w = window.open(mailto,'_blank'); if(!w) window.location.href = mailto;
+      note.textContent = 'Opening your email app to send...';
+    }
+    if(configured){
+      fetch(action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
+        .then(function(r){ r.ok ? ok() : fallback(); }).catch(fallback);
+    } else { fallback(); }
+  });
+})();
+
+/* ============ Coverage map (pin <-> area-card sync) ============ */
+(function(){
+  'use strict';
+  var pins = Array.prototype.slice.call(document.querySelectorAll('.pin'));
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.area-card[data-area]'));
+  if(!pins.length) return;
+  function setActive(area){
+    pins.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-area')===area); });
+    cards.forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-area')===area); });
+  }
+  function clearActive(){ pins.forEach(function(p){p.classList.remove('active');}); cards.forEach(function(c){c.classList.remove('active');}); }
+  function wire(el){
+    var area = el.getAttribute('data-area');
+    el.addEventListener('mouseenter', function(){ setActive(area); });
+    el.addEventListener('mouseleave', clearActive);
+    el.addEventListener('focus', function(){ setActive(area); });
+    el.addEventListener('blur', clearActive);
+  }
+  pins.forEach(wire); cards.forEach(wire);
+  function goRentals(){ var t = document.getElementById('rentals'); if(t) t.scrollIntoView({behavior:'smooth'}); }
+  cards.forEach(function(c){ c.addEventListener('click', goRentals); });
+  pins.forEach(function(p){
+    p.addEventListener('click', goRentals);
+    p.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); goRentals(); } });
+  });
+})();
+
+/* ============ Chat assistant (scripted, client-side) ============ */
+(function(){
+  'use strict';
+  var fab = document.getElementById('chatFab'), panel = document.getElementById('chatPanel');
+  var body = document.getElementById('chatBody'), quick = document.getElementById('chatQuick'), close = document.getElementById('chatClose');
+  if(!fab || !panel) return;
+
+  var PORTAL = 'https://jicoproperties.tenantcloud.com';
+  var KB = [
+    { label:'See available units', scroll:'rentals',
+      a:"Here's what's open now - browse the cards and open any one to apply. <a href='#rentals'>See available units &rarr;</a>" },
+    { label:'How do I apply?', scroll:'rentals',
+      a:"Easy: open a unit under Available and hit Apply. It runs through our secure portal and comes straight to us - a real person follows up." },
+    { label:'What areas?', scroll:'coverage',
+      a:"We own and lease in <b>Conway, Myrtle Beach, and Socastee</b>. <a href='#coverage'>See our areas &rarr;</a>" },
+    { label:'Do you allow pets?',
+      a:"Some units are pet-friendly with a deposit - the listing will note it. Not sure? <a href='#contact'>Ask us</a> before applying." },
+    { label:'Pay rent / maintenance',
+      a:"Current tenant? Pay rent and submit maintenance in the <a href='"+PORTAL+"' target='_blank' rel='noopener'>tenant portal</a>. Maintenance is in-house - or call <a href='tel:+13015422542'>301-542-2542</a>." },
+    { label:'Commercial space?',
+      a:"Yes - retail, office, and storefront space for small businesses, alongside our homes. <a href='#contact'>Tell us what you need &rarr;</a>" },
+    { label:'Talk to a person',
+      a:"Happy to help directly - call or text <a href='tel:+13015422542'>301-542-2542</a>, or <a href='#contact'>send a message</a> and we'll reply, usually the same day." }
+  ];
+
+  function bubble(text, who){
+    var d = document.createElement('div');
+    d.className = 'chat-msg ' + (who||'bot');
+    d.innerHTML = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+  }
+  function renderQuick(){
+    quick.innerHTML = '';
+    KB.forEach(function(item){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = item.label;
+      b.addEventListener('click', function(){
+        bubble(item.label, 'user');
+        setTimeout(function(){ bubble(item.a, 'bot'); }, 260);
+      });
+      quick.appendChild(b);
+    });
+  }
+  var greeted = false;
+  function open(){
+    panel.classList.add('open'); fab.classList.add('hide');
+    if(!greeted){
+      bubble("Hi! I'm the JICO Properties assistant. What can I help you find?", 'bot');
+      renderQuick();
+      greeted = true;
+    }
+  }
+  function closePanel(){ panel.classList.remove('open'); fab.classList.remove('hide'); }
+  fab.addEventListener('click', open);
+  close.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && panel.classList.contains('open')) closePanel(); });
+})();
