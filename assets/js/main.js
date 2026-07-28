@@ -1,4 +1,14 @@
 /* JICO Properties — site interactions */
+
+/* ============================================================================
+   FORMS CONFIG — one line to make the Contact + Notify-me forms email you.
+   1. Go to https://formspree.io, sign up (use info@jicoproperties.com), create
+      a new form, and copy its endpoint — it looks like https://formspree.io/f/abcwxyz
+   2. Paste that full URL between the quotes below.
+   3. Leave it '' to keep the current behavior (opens the visitor's email app).
+   ============================================================================ */
+var JICO_FORM_ENDPOINT = '';
+
 (function () {
   'use strict';
   var $ = function (s, c) { return (c || document).querySelector(s); };
@@ -104,8 +114,8 @@
       if (!name || !phone) { cNote.textContent = 'Please add your name and phone.'; cNote.className = 'quote__note err'; return; }
       var btn = cForm.querySelector('button[type="submit"]'), orig = btn.textContent;
       btn.disabled = true; btn.textContent = 'Sending…';
-      var action = cForm.getAttribute('action') || '';
-      var configured = action.indexOf('formspree.io') > -1 && action.indexOf('your-form-id') === -1;
+      var action = JICO_FORM_ENDPOINT || '';
+      var configured = action.indexOf('formspree.io') > -1;
       function ok() {
         cForm.reset(); btn.disabled = false; btn.textContent = orig;
         cNote.textContent = 'Thanks — we got it and will be in touch, usually the same day.'; cNote.className = 'quote__note ok';
@@ -264,8 +274,8 @@
     if(!name || !email){ note.textContent = 'Please add your name and email.'; return; }
     var btn = form.querySelector('.notify__btn'), orig = btn.textContent;
     btn.disabled = true; btn.textContent = 'Sending...';
-    var action = form.getAttribute('action') || '';
-    var configured = action.indexOf('formspree.io') > -1 && action.indexOf('your-form-id') === -1;
+    var action = JICO_FORM_ENDPOINT || '';
+    var configured = action.indexOf('formspree.io') > -1;
     function ok(){ form.reset(); btn.disabled = false; btn.textContent = orig;
       note.textContent = "You're on the list - we'll reach out when something fits."; }
     function fallback(){
