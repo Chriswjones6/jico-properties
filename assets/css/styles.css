@@ -827,3 +827,19 @@ a{color:inherit;text-decoration:none}
   filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}
 @media(max-width:560px){.unit-stamp{font-size:1.55rem}}
 .unit-card:has(.is-leased){cursor:default}
+
+/* ---- Qualifications & standards ---- */
+.std-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:1rem}
+@media(max-width:760px){.std-grid{grid-template-columns:1fr}}
+.std-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:1.6rem 1.5rem;position:relative;overflow:hidden}
+.std-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:var(--red)}
+.std-card h3{font-family:var(--display);font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:.9rem;display:flex;align-items:center;gap:.6rem}
+.std-card h3 svg{width:24px;height:24px;fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.std-card ul{list-style:none;margin:0;padding:0}
+.std-card li{position:relative;padding:.5rem 0 .5rem 1.3rem;color:var(--muted);font-size:.92rem;line-height:1.55;border-top:1px solid var(--line)}
+.std-card li:first-child{border-top:0}
+.std-card li::before{content:"";position:absolute;left:0;top:.95rem;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.std-card li b{color:#fff;font-weight:700}
+.std-cta{margin-top:1.6rem;font-size:1rem;color:var(--muted)}
+.std-cta a{color:var(--red-ink);font-weight:700}
+.std-cta a:hover{text-decoration:underline}
