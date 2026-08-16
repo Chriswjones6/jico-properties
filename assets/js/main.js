@@ -44,32 +44,40 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
      Replace with real listings (or wire to your TenantCloud feed).
      type: 'residential' | 'commercial'  ·  status: 'available' | 'soon'
      ========================================================= */
+  /* Recently LEASED properties (real), shown as portfolio examples while there
+     are no active vacancies. Add new available units here with status:'available'. */
   var SAMPLE_UNITS = [
-    { type:'residential', status:'available', title:'3 bed · 2 bath house',        addr:'Conway',                    beds:'3 bd', bath:'2 ba', sqft:'1,650 sqft', rent:'$2,100', img:'assets/img/interior-1.jpg' },
-    { type:'residential', status:'available', title:'2 bed · 2 bath condo',        addr:'Myrtle Beach',              beds:'2 bd', bath:'2 ba', sqft:'1,100 sqft', rent:'$1,650', img:'assets/img/kitchen-2.jpg' },
-    { type:'commercial',  status:'available', title:'Retail / office suite',       addr:'Socastee',                  beds:'—',   bath:'1 ba', sqft:'1,400 sqft', rent:'$1,900', img:'assets/img/exterior-1.jpg' },
-    { type:'residential', status:'soon',      title:'2 bed · 1 bath duplex',       addr:'Socastee',                  beds:'2 bd', bath:'1 ba', sqft:'900 sqft',  rent:'$1,475', img:'assets/img/kitchen-1.jpg' },
-    { type:'commercial',  status:'available', title:'Small-business storefront',   addr:'Myrtle Beach',              beds:'—',   bath:'1 ba', sqft:'2,000 sqft', rent:'$2,600', img:'assets/img/hero-home.jpg' },
-    { type:'residential', status:'available', title:'4 bed · 3 bath house',        addr:'Conway',                    beds:'4 bd', bath:'3 ba', sqft:'2,200 sqft', rent:'$2,650', img:'assets/img/interior-1.jpg' }
+    { type:'commercial',  status:'leased', title:'Storefront retail / office', addr:'US-17 Bypass, Myrtle Beach',   beds:'—',    bath:'—',  sqft:'—',         rent:'$2,300', img:'assets/img/lease-storefront-mb.jpg' },
+    { type:'commercial',  status:'leased', title:'Flex / office suite',        addr:'3926 Wesley St, Myrtle Beach', beds:'—',    bath:'—',  sqft:'2,000 sqft', rent:'$2,200', img:'assets/img/lease-flex-wesley.jpg' },
+    { type:'residential', status:'leased', title:'3 bed · 2 bath townhouse',   addr:'Barberry Dr, Conway · near CCU', beds:'3 bd', bath:'2 ba', sqft:'—',       rent:'$1,750', img:'assets/img/lease-townhouse-conway.jpg' }
   ];
 
   var grid = $('#unitGrid');
   if (grid) {
     grid.innerHTML = SAMPLE_UNITS.map(function (u) {
-      var badge = u.status === 'soon'
-        ? '<span class="unit-badge unit-badge--soon">Coming soon</span>'
-        : '<span class="unit-badge">Available now</span>';
-      var bedbits = u.beds !== '—' ? '<span><b>' + u.beds + '</b></span>' : '<span><b>Commercial</b></span>';
+      var leased = u.status === 'leased';
+      var href = leased ? '#notify' : 'https://jicoproperties.tenantcloud.com';
+      var target = leased ? '' : ' target="_blank" rel="noopener"';
+      var overlay = leased
+        ? '<span class="unit-stamp">Leased</span>'
+        : (u.status === 'soon'
+            ? '<span class="unit-badge unit-badge--soon">Coming soon</span>'
+            : '<span class="unit-badge">Available now</span>');
+      var meta = [];
+      meta.push('<span><b>' + (u.beds !== '—' ? u.beds : (u.type === 'commercial' ? 'Commercial' : '—')) + '</b></span>');
+      if (u.bath && u.bath !== '—') meta.push('<span><b>' + u.bath + '</b></span>');
+      if (u.sqft && u.sqft !== '—') meta.push('<span><b>' + u.sqft + '</b></span>');
       return '' +
-        '<a class="unit-card reveal" href="https://jicoproperties.tenantcloud.com" target="_blank" rel="noopener" data-cat="' + u.type + '">' +
-          '<div class="unit-shot">' + badge + '<img src="' + u.img + '" alt="' + u.title + ' in ' + u.addr + '" loading="lazy"></div>' +
+        '<a class="unit-card reveal" href="' + href + '"' + target + ' data-cat="' + u.type + '">' +
+          '<div class="unit-shot' + (leased ? ' is-leased' : '') + '">' + overlay +
+            '<img src="' + u.img + '" alt="' + u.title + ' in ' + u.addr + '" loading="lazy"></div>' +
           '<div class="unit-body">' +
             '<h3>' + u.title + '</h3>' +
             '<div class="unit-addr">' +
               '<svg viewBox="0 0 24 24" width="14" height="14" fill="#D71F27"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/></svg>' + u.addr +
             '</div>' +
-            '<div class="unit-meta">' + bedbits + '<span><b>' + u.bath + '</b></span><span><b>' + u.sqft + '</b></span>' +
-              '<span class="unit-rent"><span class="n">' + u.rent + '</span><small>per month</small></span>' +
+            '<div class="unit-meta">' + meta.join('') +
+              '<span class="unit-rent"><span class="n">' + u.rent + '</span><small>' + (leased ? 'leased' : 'per month') + '</small></span>' +
             '</div>' +
           '</div>' +
         '</a>';

@@ -813,3 +813,12 @@ a{color:inherit;text-decoration:none}
   font-family:var(--display);font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
 .chat-quick button:hover{border-color:var(--red);color:#fff;background:rgba(215,31,39,.12)}
 @media(prefers-reduced-motion:reduce){.pin.active .pin__pulse{animation:none}}
+
+/* ---- Leased stamp on unit cards ---- */
+.unit-shot.is-leased img{filter:brightness(.66) saturate(.8)}
+.unit-stamp{position:absolute;top:50%;left:50%;z-index:3;pointer-events:none;
+  transform:translate(-50%,-50%) rotate(-13deg);
+  font-family:var(--display);font-weight:900;font-size:1.55rem;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border:3px solid #fff;border-radius:8px;padding:.28rem 1.1rem;
+  background:rgba(215,31,39,.82);box-shadow:0 6px 20px rgba(0,0,0,.45);text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.unit-card:has(.is-leased){cursor:default}
