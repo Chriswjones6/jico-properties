@@ -2,7 +2,7 @@
 
 /* ============================================================================
    FORMS CONFIG — one line to make the Contact + Notify-me forms email you.
-   1. Go to https://formspree.io, sign up (use info@jicoproperties.com), create
+   1. Go to https://formspree.io, sign up (use chris@jicoproperties.com), create
       a new form, and copy its endpoint — it looks like https://formspree.io/f/abcwxyz
    2. Paste that full URL between the quotes below.
    3. Leave it '' to keep the current behavior (opens the visitor's email app).
@@ -133,7 +133,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
         var body = 'NEW INQUIRY — JICO Properties\n\n' +
           'Name: ' + name + '\nPhone: ' + phone + '\nEmail: ' + q('email') +
           '\nInterested in: ' + q('interest') + '\n\nMessage:\n' + q('message') + '\n';
-        var mailto = 'mailto:info@jicoproperties.com?subject=' +
+        var mailto = 'mailto:chris@jicoproperties.com?subject=' +
           encodeURIComponent('Website inquiry — ' + q('interest')) + '&body=' + encodeURIComponent(body);
         var w = window.open(mailto, '_blank'); if (!w) window.location.href = mailto;
         cNote.textContent = 'Opening your email app to send…'; cNote.className = 'quote__note';
@@ -290,7 +290,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
       btn.disabled = false; btn.textContent = orig;
       var body = 'NOTIFY-ME REQUEST - JICO Properties\n\nName: '+name+'\nEmail: '+email+
         '\nPhone: '+q('phone')+'\nPreferred area: '+(q('area')||'Any')+'\nType: '+(q('type')||'Any')+'\n';
-      var mailto = 'mailto:info@jicoproperties.com?subject='+encodeURIComponent('Notify me - new availability')+
+      var mailto = 'mailto:chris@jicoproperties.com?subject='+encodeURIComponent('Notify me - new availability')+
         '&body='+encodeURIComponent(body);
       var w = window.open(mailto,'_blank'); if(!w) window.location.href = mailto;
       note.textContent = 'Opening your email app to send...';
