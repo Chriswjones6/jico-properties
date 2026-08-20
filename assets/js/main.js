@@ -49,7 +49,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
   var SAMPLE_UNITS = [
     { type:'commercial',  status:'leased', title:'Storefront retail / office', addr:'4873 US Hwy 17 Bypass S, Myrtle Beach', beds:'—', bath:'—', sqft:'—',   rent:'$2,300', img:'assets/img/lease-storefront-mb.jpg' },
     { type:'commercial',  status:'leased', title:'Flex / office suite',        addr:'3926 Wesley St, Myrtle Beach', beds:'—',    bath:'—',  sqft:'2,000 sqft', rent:'$2,200', img:'assets/img/lease-flex-wesley.jpg' },
-    { type:'residential', status:'leased', title:'3 bed · 2 bath townhouse',   addr:'1800 Barberry Dr, Conway, SC', beds:'3 bd', bath:'2 ba', sqft:'—',   rent:'$1,750', img:'assets/img/lease-townhouse-conway.jpg' }
+    { type:'residential', status:'leased', title:'3 bed · 2 bath townhouse',   addr:'1802 Barberry Dr, Conway, SC', beds:'3 bd', bath:'2 ba', sqft:'—',   rent:'$1,750', img:'assets/img/lease-townhouse-conway.jpg' }
   ];
 
   var grid = $('#unitGrid');
