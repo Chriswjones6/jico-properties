@@ -346,7 +346,9 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
       (marketPts[b.market] = marketPts[b.market] || []).push([lat,lng]);
     }
   });
-  if(all.length){ map.fitBounds(L.featureGroup(all).getBounds().pad(0.12)); }
+  var fg = all.length ? L.featureGroup(all) : null;
+  function frame(){ map.invalidateSize(); if(fg){ map.fitBounds(fg.getBounds().pad(0.12)); } }
+  frame();
 
   Array.prototype.slice.call(document.querySelectorAll('.area-card[data-area]')).forEach(function(card){
     card.style.cursor = 'pointer';
@@ -359,8 +361,18 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
   // don't hijack page scroll: wheel-zoom only after the user clicks into the map
   map.on('click', function(){ map.scrollWheelZoom.enable(); });
   mapEl.addEventListener('mouseleave', function(){ map.scrollWheelZoom.disable(); });
-  setTimeout(function(){ map.invalidateSize(); }, 250);
+
+  // Leaflet was initialized while the section was below the fold, so re-size and
+  // re-frame once it's actually visible (and on load/resize) to load all tiles.
+  setTimeout(frame, 300);
+  window.addEventListener('load', frame);
   window.addEventListener('resize', function(){ map.invalidateSize(); });
+  if('IntersectionObserver' in window){
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ frame(); vio.disconnect(); } });
+    }, { threshold:0.15 });
+    vio.observe(mapEl);
+  }
 })();
 
 /* ============ Chat assistant (scripted, client-side) ============ */

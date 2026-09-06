@@ -730,7 +730,8 @@ a{color:inherit;text-decoration:none}
 @media(max-width:880px){.coverage__in{grid-template-columns:1fr}}
 .map{position:relative;background:radial-gradient(120% 90% at 80% 20%,#12324a 0%,#0c1420 55%,#0a0f18 100%);
   border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
-.map svg{width:100%;height:auto;display:block}
+/* (removed .map svg width:100% — it was blowing up Leaflet's attribution flag) */
+.leaflet-attribution-flag{width:12px!important;height:8px!important;display:inline!important}
 .map__land{fill:#171a20;stroke:rgba(255,255,255,.06);stroke-width:1}
 .map__water{fill:url(#seaGrad)}
 .map__waterway{fill:none;stroke:#2b5b6e;stroke-opacity:.6;stroke-width:2.5;stroke-dasharray:6 7}
