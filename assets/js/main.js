@@ -332,22 +332,41 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
     maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
   }).addTo(map);
 
+  // Red teardrop pin
+  var pinIcon = L.icon({
+    iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="30" viewBox="0 0 22 30">' +
+      '<path d="M11 0C5 0 .5 4.6 .5 10.4.5 18 11 29.5 11 29.5S21.5 18 21.5 10.4C21.5 4.6 17 0 11 0z" fill="#D71F27" stroke="#fff" stroke-width="1.5"/>' +
+      '<circle cx="11" cy="10.5" r="3.6" fill="#fff"/></svg>'),
+    iconSize:[22,30], iconAnchor:[11,29], popupAnchor:[0,-27]
+  });
+
+  // Cluster group: shows a red count badge when pins overlap, fans out on zoom/click
+  var useCluster = typeof L.markerClusterGroup === 'function';
+  var layer = useCluster ? L.markerClusterGroup({
+    maxClusterRadius: 46, showCoverageOnHover: false, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 17,
+    iconCreateFunction: function(c){
+      var n = c.getChildCount(), s = n < 10 ? 34 : (n < 25 ? 40 : 46);
+      return L.divIcon({ html:'<div class="jico-cluster">'+n+'</div>', className:'jico-cluster-wrap', iconSize:[s,s] });
+    }
+  }) : L.layerGroup();
+
   var GA = Math.PI * (3 - Math.sqrt(5)); // golden angle for an even mini-cluster
-  var all = [], marketPts = {};
+  var bounds = [], marketPts = {};
   BUILDINGS.forEach(function(b){
     for(var k=0;k<b.units;k++){
-      var rad = 0.00013 * Math.sqrt(k);
+      var rad = 0.00011 * Math.sqrt(k);
       var ang = k * GA;
       var lat = b.lat + rad * Math.cos(ang);
       var lng = b.lng + rad * Math.sin(ang) / Math.cos(b.lat*Math.PI/180);
-      var m = L.circleMarker([lat,lng], { radius:6, color:'#fff', weight:1.5, fillColor:'#D71F27', fillOpacity:.92 });
+      var m = L.marker([lat,lng], { icon: pinIcon });
       m.bindPopup('<strong>'+b.label+'</strong><br>'+b.city+' &middot; '+b.type+'<br>'+b.units+(b.units>1?' units':' unit')+' at this property');
-      m.addTo(map); all.push(m);
+      layer.addLayer(m); bounds.push([lat,lng]);
       (marketPts[b.market] = marketPts[b.market] || []).push([lat,lng]);
     }
   });
-  var fg = all.length ? L.featureGroup(all) : null;
-  function frame(){ map.invalidateSize(); if(fg){ map.fitBounds(fg.getBounds().pad(0.12)); } }
+  map.addLayer(layer);
+  function frame(){ map.invalidateSize(); if(bounds.length){ map.fitBounds(L.latLngBounds(bounds).pad(0.12)); } }
   frame();
 
   Array.prototype.slice.call(document.querySelectorAll('.area-card[data-area]')).forEach(function(card){
