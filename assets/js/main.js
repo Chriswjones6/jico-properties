@@ -302,31 +302,65 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
   });
 })();
 
-/* ============ Coverage map (pin <-> area-card sync) ============ */
+/* ============ Coverage map (Leaflet — one red pin per unit) ============ */
+/* Buildings geocoded from the Schedule of Real Estate Owned. One pin is drawn
+   per unit, clustered tightly at the building, so the map shows both the number
+   of properties and the number of units. Add/edit properties in BUILDINGS. */
 (function(){
   'use strict';
-  var pins = Array.prototype.slice.call(document.querySelectorAll('.pin'));
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.area-card[data-area]'));
-  if(!pins.length) return;
-  function setActive(area){
-    pins.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-area')===area); });
-    cards.forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-area')===area); });
-  }
-  function clearActive(){ pins.forEach(function(p){p.classList.remove('active');}); cards.forEach(function(c){c.classList.remove('active');}); }
-  function wire(el){
-    var area = el.getAttribute('data-area');
-    el.addEventListener('mouseenter', function(){ setActive(area); });
-    el.addEventListener('mouseleave', clearActive);
-    el.addEventListener('focus', function(){ setActive(area); });
-    el.addEventListener('blur', clearActive);
-  }
-  pins.forEach(wire); cards.forEach(wire);
-  function goRentals(){ var t = document.getElementById('rentals'); if(t) t.scrollIntoView({behavior:'smooth'}); }
-  cards.forEach(function(c){ c.addEventListener('click', goRentals); });
-  pins.forEach(function(p){
-    p.addEventListener('click', goRentals);
-    p.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); goRentals(); } });
+  var mapEl = document.getElementById('propMap');
+  if(!mapEl || !window.L) return;
+
+  var BUILDINGS = [
+    {label:'512 Calypso Dr',        city:'Myrtle Beach (Socastee)', market:'socastee',     type:'Residential', units:1,  lat:33.671853, lng:-78.980301},
+    {label:'1806/1808 Barberry Dr', city:'Conway',                  market:'conway',       type:'Residential', units:2,  lat:33.803052, lng:-79.015070},
+    {label:'1802/1804 Barberry Dr', city:'Conway',                  market:'conway',       type:'Residential', units:2,  lat:33.803053, lng:-79.015019},
+    {label:'4811 US-17 Byp S',      city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:7,  lat:33.682413, lng:-78.962263},
+    {label:'4871-4875 US-17 Byp S', city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:5,  lat:33.682050, lng:-78.962576},
+    {label:'5629 Rosewood Dr',      city:'Myrtle Beach (Socastee)', market:'socastee',     type:'Residential', units:1,  lat:33.687361, lng:-78.993578},
+    {label:'4703/4709 US-17 Byp S', city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:4,  lat:33.683050, lng:-78.961723},
+    {label:'4533-4537 US-17 Byp S', city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:3,  lat:33.684053, lng:-78.960873},
+    {label:'4559 US-17 Byp S',      city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:2,  lat:33.683900, lng:-78.961003},
+    {label:'1200 Pine St',          city:'Conway',                  market:'conway',       type:'Residential', units:3,  lat:33.843691, lng:-79.059311},
+    {label:'3926 Wesley St',        city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:13, lat:33.717378, lng:-78.934290},
+    {label:'1104 Ragin St',         city:'Myrtle Beach',            market:'myrtle-beach', type:'Residential', units:1,  lat:33.702529, lng:-78.885554},
+    {label:'4529 US-17 Byp S',      city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:1,  lat:33.684077, lng:-78.960853}
+  ];
+
+  var map = L.map(mapEl, { scrollWheelZoom:false, zoomControl:true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var GA = Math.PI * (3 - Math.sqrt(5)); // golden angle for an even mini-cluster
+  var all = [], marketPts = {};
+  BUILDINGS.forEach(function(b){
+    for(var k=0;k<b.units;k++){
+      var rad = 0.00013 * Math.sqrt(k);
+      var ang = k * GA;
+      var lat = b.lat + rad * Math.cos(ang);
+      var lng = b.lng + rad * Math.sin(ang) / Math.cos(b.lat*Math.PI/180);
+      var m = L.circleMarker([lat,lng], { radius:6, color:'#fff', weight:1.5, fillColor:'#D71F27', fillOpacity:.92 });
+      m.bindPopup('<strong>'+b.label+'</strong><br>'+b.city+' &middot; '+b.type+'<br>'+b.units+(b.units>1?' units':' unit')+' at this property');
+      m.addTo(map); all.push(m);
+      (marketPts[b.market] = marketPts[b.market] || []).push([lat,lng]);
+    }
   });
+  if(all.length){ map.fitBounds(L.featureGroup(all).getBounds().pad(0.12)); }
+
+  Array.prototype.slice.call(document.querySelectorAll('.area-card[data-area]')).forEach(function(card){
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(){
+      var pts = marketPts[card.getAttribute('data-area')];
+      if(pts && pts.length){ map.fitBounds(L.latLngBounds(pts).pad(0.4)); mapEl.scrollIntoView({behavior:'smooth', block:'center'}); }
+    });
+  });
+
+  // don't hijack page scroll: wheel-zoom only after the user clicks into the map
+  map.on('click', function(){ map.scrollWheelZoom.enable(); });
+  mapEl.addEventListener('mouseleave', function(){ map.scrollWheelZoom.disable(); });
+  setTimeout(function(){ map.invalidateSize(); }, 250);
+  window.addEventListener('resize', function(){ map.invalidateSize(); });
 })();
 
 /* ============ Chat assistant (scripted, client-side) ============ */
