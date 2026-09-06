@@ -332,21 +332,22 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
     maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Red teardrop pin
+  // Small, thin red teardrop pin
   var pinIcon = L.icon({
     iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
       '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="30" viewBox="0 0 22 30">' +
       '<path d="M11 0C5 0 .5 4.6 .5 10.4.5 18 11 29.5 11 29.5S21.5 18 21.5 10.4C21.5 4.6 17 0 11 0z" fill="#D71F27" stroke="#fff" stroke-width="1.5"/>' +
       '<circle cx="11" cy="10.5" r="3.6" fill="#fff"/></svg>'),
-    iconSize:[22,30], iconAnchor:[11,29], popupAnchor:[0,-27]
+    iconSize:[15,20], iconAnchor:[7,20], popupAnchor:[0,-18]
   });
 
-  // Cluster group: shows a red count badge when pins overlap, fans out on zoom/click
+  // Cluster group: only tightly-stacked units group up (as a small count badge);
+  // everything separates into individual pins as soon as you zoom in.
   var useCluster = typeof L.markerClusterGroup === 'function';
   var layer = useCluster ? L.markerClusterGroup({
-    maxClusterRadius: 46, showCoverageOnHover: false, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 17,
+    maxClusterRadius: 24, showCoverageOnHover: false, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 14,
     iconCreateFunction: function(c){
-      var n = c.getChildCount(), s = n < 10 ? 34 : (n < 25 ? 40 : 46);
+      var n = c.getChildCount(), s = n < 10 ? 26 : (n < 25 ? 32 : 38);
       return L.divIcon({ html:'<div class="jico-cluster">'+n+'</div>', className:'jico-cluster-wrap', iconSize:[s,s] });
     }
   }) : L.layerGroup();
@@ -355,7 +356,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
   var bounds = [], marketPts = {};
   BUILDINGS.forEach(function(b){
     for(var k=0;k<b.units;k++){
-      var rad = 0.00011 * Math.sqrt(k);
+      var rad = 0.00016 * Math.sqrt(k);
       var ang = k * GA;
       var lat = b.lat + rad * Math.cos(ang);
       var lng = b.lng + rad * Math.sin(ang) / Math.cos(b.lat*Math.PI/180);
