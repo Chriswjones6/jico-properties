@@ -341,22 +341,15 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
     iconSize:[15,20], iconAnchor:[7,20], popupAnchor:[0,-18]
   });
 
-  // Cluster group: only tightly-stacked units group up (as a small count badge);
-  // everything separates into individual pins as soon as you zoom in.
-  var useCluster = typeof L.markerClusterGroup === 'function';
-  var layer = useCluster ? L.markerClusterGroup({
-    maxClusterRadius: 24, showCoverageOnHover: false, spiderfyOnMaxZoom: true, disableClusteringAtZoom: 14,
-    iconCreateFunction: function(c){
-      var n = c.getChildCount(), s = n < 10 ? 26 : (n < 25 ? 32 : 38);
-      return L.divIcon({ html:'<div class="jico-cluster">'+n+'</div>', className:'jico-cluster-wrap', iconSize:[s,s] });
-    }
-  }) : L.layerGroup();
+  // Every unit is its own pin (no clustering). Units at the same building fan
+  // out in a small spiral so a stacked building reads as a clump of pins.
+  var layer = L.featureGroup();
 
   var GA = Math.PI * (3 - Math.sqrt(5)); // golden angle for an even mini-cluster
   var bounds = [], marketPts = {};
   BUILDINGS.forEach(function(b){
     for(var k=0;k<b.units;k++){
-      var rad = 0.00016 * Math.sqrt(k);
+      var rad = 0.00024 * Math.sqrt(k);
       var ang = k * GA;
       var lat = b.lat + rad * Math.cos(ang);
       var lng = b.lng + rad * Math.sin(ang) / Math.cos(b.lat*Math.PI/180);
