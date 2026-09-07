@@ -862,3 +862,24 @@ a{color:inherit;text-decoration:none}
   background:var(--red);color:#fff;border:2px solid #fff;border-radius:50%;
   font-family:var(--display);font-weight:800;font-size:14px;line-height:1;
   box-shadow:0 3px 12px rgba(0,0,0,.45)}
+
+/* ===========================================================
+   LIGHT HEADER / TOPBAR — white bar, black logo, dark nav
+   =========================================================== */
+.topbar{background:#f3f4f6;color:#5a5a63;border-bottom:1px solid rgba(0,0,0,.08)}
+.topbar__phone{color:#17171a}
+.topbar__phone:hover{color:var(--red)}
+.topbar__item .ic{color:var(--red)}
+.header{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:1px solid rgba(0,0,0,.08)}
+.header.scrolled{background:#fff;border-bottom-color:rgba(0,0,0,.12);box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.nav a{color:#33333a}
+.nav a:hover{color:#111}
+.hamburger span{background:#17171a}
+@media(max-width:920px){
+  .nav{background:#0a0a0c}   /* mobile slide-in panel stays dark */
+  .nav a{color:#f4f4f5}      /* light links on the dark panel */
+}
+/* Renter tiles as light cards on the white section */
+.lightsec .action{background:#fff;border-color:rgba(0,0,0,.10);box-shadow:0 12px 30px -18px rgba(0,0,0,.22)}
+.lightsec .action h3{color:#141416}
+.lightsec .action p{color:#5a5a63}
