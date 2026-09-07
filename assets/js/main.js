@@ -213,7 +213,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
    prefers-reduced-motion users just see the hero-home.jpg fallback. */
 (function(){
   'use strict';
-  var HERO_CLIPS = [
+  var HERO_CLIPS = window.JICO_HERO_CLIPS || [
     'assets/video/hero-retail-plaza.mp4',     // 1 commercial retail strip
     'assets/video/hero-homes-aerial.mp4',     // 2 residential aerial
     'assets/video/hero-coastal-travel.mp4',   // 3 beach
