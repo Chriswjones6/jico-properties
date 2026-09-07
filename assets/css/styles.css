@@ -901,3 +901,8 @@ a{color:inherit;text-decoration:none}
 .lightsec .quote input::placeholder,.lightsec .quote textarea::placeholder{color:#9a9aa2}
 .lightsec .quote input:focus,.lightsec .quote select:focus,.lightsec .quote textarea:focus{background:#fff;border-color:var(--red)}
 .lightsec .quote__note{color:#6a6a72}
+
+/* ---- Ventures hero: bigger business name, no dash ---- */
+.kicker--vent{font-size:1.35rem;letter-spacing:.08em;gap:0;margin-bottom:1rem}
+.kicker--vent::before{display:none}
+@media(max-width:520px){.kicker--vent{font-size:1.1rem}}
