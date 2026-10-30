@@ -324,7 +324,8 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
     {label:'1200 Pine St',          city:'Conway',                  market:'conway',       type:'Residential', units:3,  lat:33.843691, lng:-79.059311},
     {label:'3926 Wesley St',        city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:13, lat:33.717378, lng:-78.934290},
     {label:'1104 Ragin St',         city:'Myrtle Beach',            market:'myrtle-beach', type:'Residential', units:1,  lat:33.702529, lng:-78.885554},
-    {label:'4529 US-17 Byp S',      city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:1,  lat:33.684077, lng:-78.960853}
+    {label:'4529 US-17 Byp S',      city:'Myrtle Beach',            market:'myrtle-beach', type:'Commercial',  units:1,  lat:33.684077, lng:-78.960853},
+    {label:'3995 Walnut St',        city:'Loris',                   market:'loris',        type:'Residential', units:1,  lat:34.057094, lng:-78.890254}
   ];
 
   var map = L.map(mapEl, { scrollWheelZoom:false, zoomControl:true });
@@ -402,7 +403,7 @@ var JICO_FORM_ENDPOINT = 'https://formspree.io/f/xojgrjva';
     { label:'How do I apply?', scroll:'rentals',
       a:"Easy: open a unit under Available and hit Apply. It runs through our secure portal and comes straight to us - a real person follows up." },
     { label:'What areas?', scroll:'coverage',
-      a:"We own and lease in <b>Conway, Myrtle Beach, and Socastee</b>. <a href='#coverage'>See our areas &rarr;</a>" },
+      a:"We own and lease in <b>Conway, Myrtle Beach, Socastee, and Loris</b>. <a href='#coverage'>See our areas &rarr;</a>" },
     { label:'Do you allow pets?',
       a:"Some units are pet-friendly with a deposit - the listing will note it. Not sure? <a href='#contact'>Ask us</a> before applying." },
     { label:'Pay rent / maintenance',
